@@ -15,6 +15,10 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 const  App =() => {
   const [name ,setName] =useState('MyID')
   const see =3;
+  const setData ={
+    'name' :'kahlad',
+    'name': 'ali'
+  }
   
 
   
@@ -108,8 +112,8 @@ const styles =StyleSheet.create({
   },text2:{
    
       fontfamily: 'Open Sans',
-    
-    color:'#1C2833',
+  
+    color:'black',
 fontSize:40,
 marginLeft:140,
 marginTop:-30
