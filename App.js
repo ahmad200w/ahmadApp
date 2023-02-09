@@ -112,8 +112,8 @@ const styles =StyleSheet.create({
   },text2:{
    
       fontfamily: 'Open Sans',
-  
-    color:'black',
+      
+    color:'#1C2833',
 fontSize:40,
 marginLeft:140,
 marginTop:-30
