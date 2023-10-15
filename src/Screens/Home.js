@@ -23,7 +23,7 @@ const Home = () => {
   const [datei, setDatei] = useState(data);
   console.log(data);
 
-  const [colorChange, setcolorChange] = useState(false);
+  const [Selcted, SetSelcted] = useState(false);
   const [cont, setCont] = useState(0);
   const {width, height} = useWindowDimensions();
 
@@ -39,6 +39,7 @@ const Home = () => {
         // const highRam = data.filter(item => item.ram === 8);
         setDatei(filterBy('ram' , 8));
       },
+      isSelcted:Selcted
     },
     {
       id: 1,
@@ -47,6 +48,7 @@ const Home = () => {
         const highRam = data.filter(item => item.ram > 8);
         setDatei(highRam);
       },
+      isSelcted:Selcted
     },
     {
       id: 2,
@@ -55,6 +57,7 @@ const Home = () => {
         const lowPreis = data.filter(item => item.newPrice <= 750);
         setDatei(lowPreis);
       },
+      isSelcted:Selcted
     },
     {
       id: 3,
@@ -63,6 +66,7 @@ const Home = () => {
         const heightPreis = data.filter(item => item.newPrice > 750);
         setDatei(heightPreis);
       },
+      isSelcted:Selcted
     },
     {
       id: 4,
@@ -73,6 +77,7 @@ const Home = () => {
         );
         setDatei(filterData);
       },
+      isSelcted:Selcted
     },
     {
       id: 4,
@@ -80,30 +85,36 @@ const Home = () => {
       onpresshandel: () => {
         setDatei(data);
       },
+      isSelcted:Selcted
     },
   ];
-
 
   const flattlistItemforTextIcon = ({item, index}) => {
     return (
       <View style={styles.knopfText}>
-        <TouchableOpacity
+        {  <TouchableOpacity
           onPress={() => {
             item.onpresshandel();
-            setcolorChange(prevColor => !prevColor);
+            
+            
           }}
           style={[
             styles.textBody,
-            {backgroundColor: colorChange ? 'white' : '#332C39'},
+            { backgroundColor:  item.isSelcted ? 'white' : '#332C39'},
           ]}>
           <Text
-            style={[styles.text, {color: colorChange ? '#332C39' : 'white'}]}>
+            style={[styles.text, {color: item.isSelcted
+           ? '#332C39' : 'white'}]}>
+              
             {item.text}
           </Text>
         </TouchableOpacity>
+        }
+       
       </View>
     );
   };
+  
 
   return (
     <SafeAreaView style={{backgroundColor: '#609EA2'}}>
