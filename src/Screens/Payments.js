@@ -26,6 +26,7 @@ const Payments = () => {
   const data = router.params.printProduct
  
   const total = router.params.total
+
   const fetchToken = async () => {
     try {
       const afterToken = await AsyncStorage.getItem("emailLogin");
@@ -44,9 +45,9 @@ const Payments = () => {
     }
   };
     
- 
 
-  console.log(fetchToken())
+
+
  
 
 
@@ -104,35 +105,34 @@ const Payments = () => {
     }
   };
 
+
   const sendTheOrderWithId = async () => {
     try {
-      const tokenData = await fetchToken();
-      const { email, password, username } = tokenData;
+        const tokenData = await fetchToken();
+        const { username, email, password } = tokenData;
 
-  
-      const order = data;
-      const orders = {
-        username: username,
-        email: email,
-        password,password,
-        orders: order.map(item => ({
-          quantity: item.quantity,
-          phoneType: item.phoneType,
-          total: item.total
-        })),
-        total: total
-      };
-      console.log('data fetch ', orders)
-      const result = await orderData(orders);
+        const order = data; // تأكد من أن هذه البيانات تأتي بالتنسيق المطلوب
+        const orders =   {
+            username: username, // انظر هنا، يجب أن تكون userName وليس username
+            email: email,
+            password: 54321,
+             orders: order.map(item => ({
+                quantity: item.quantity,
+                phoneType: item.phoneType,
+                total: item.total
+            })),
+            total: total
+        };
 
-  
-      console.log( result);
-      return result;
+        const result = await orderData(orders);
+
+        console.log(result);
+        return result;
     } catch (error) {
-      console.error(error);
-      // يمكنك إدراج التعامل مع الأخطاء هنا
+        console.error(error);
+        // يمكنك إدراج التعامل مع الأخطاء هنا
     }
-  };
+};
   return (
     <SafeAreaView style={styles.body}>
       <View

@@ -18,7 +18,7 @@ const Login = () => {
     }
 
 
-    const login =  async () => {
+    /*const login =  async () => {
         try {
             const data = await apiLogin(user, email, password);
             if (data && data._id) {
@@ -41,6 +41,38 @@ const Login = () => {
             return err
         }
     }
+*/
+const login = async () => {
+    try {
+      const data = await apiLogin(user, email, password);
+      if (data && data._id) {
+        const userDataToStore = {
+          username: data.userName,
+          email: data.email,
+          
+        };
+      
+  
+        // تغيير ترتيب الخصائص هنا
+        const tokenToSave = {
+          username: userDataToStore.username,
+          email: userDataToStore.email,
+          password: password,
+
+
+        };
+        console.log(password)
+  
+        await AsyncStorage.setItem("emailLogin", JSON.stringify(tokenToSave));
+  
+        navigation.navigate('Home');
+      }
+    } catch (err) {
+      console.error(err);
+      // يمكنك إدراج التعامل مع الأخطاء هنا
+    }
+  };
+  
     
 
  

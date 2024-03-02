@@ -1,7 +1,10 @@
 
-export const baseURL = 'https://ka-zkkx.onrender.com';
+export 
+
+const baseURL = "https://ka-zkkx.onrender.com";
 
 //https://ka-zkkx.onrender.com
+//http://localhost:7500/
 
 const fetchApi = async (link, method, body) => {
   const url = baseURL + link;
@@ -45,17 +48,18 @@ export const orderData = async (orders) => {
   const link = '/sendOrder';
 
   const requestBody = {
+    username: orders.username,
     email: orders.email,
     password: orders.password,
     order: orders.orders,
     total: orders.total,
-    username: orders.username
+    
   };
 
   console.log('Request Body:', requestBody);
 
-  const response = await fetchApi(link, 'POST', requestBody);
-  console.log('Response:', response); // تسجيل الرد
+  const response = await fetchApi(link, 'POST',requestBody);
+ 
 
   return response;
 };
