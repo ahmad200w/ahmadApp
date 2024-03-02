@@ -11,30 +11,31 @@ import {
 import React, {useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
+
 const {width, height} = Dimensions.get('window');
 
 const Intro = () => {
   const navigation = useNavigation();
-  const items = [
+  const data = [
     {
       id: 0,
-      image: require('../assets/image/intorPhoto/s1.jpg'),
-      titel: 'Super Power',
+      image: require('../assets/image/intorPhoto/watchs.png'),
+      titel: 'time in your hand',
     },
     {
       id: 1,
-      image: require('../assets/image/intorPhoto/s2.jpg'),
-      titel: 'Camera with no Comment',
+      image: require('../assets/image/intorPhoto/1.png'),
+      titel: 'the power of Camera ',
     },
     {
       id: 2,
       image: require('../assets/image/intorPhoto/s2.jpg'),
       titel: 'Go to login screen',
       toch: () => {
-        navigation.navigate('Home');
+        navigation.navigate("login");
       },
     },
-  ];
+  ];;
   const scrollAnimation = useRef(new Animated.Value(0)).current;
   return (
     <View style={styles.screen}>
@@ -44,8 +45,8 @@ const Intro = () => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        keyExtractor={item => items.id}
-        data={items}
+        keyExtractor={item => item.id}
+        data={data}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {x: scrollAnimation}}}],
           {useNativeDriver: true},

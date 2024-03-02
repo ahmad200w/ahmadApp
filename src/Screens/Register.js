@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {apiRegister, baseURL} from '../../api';
-import Navigation from '../../scrs/Navigation';
+import Navi from '../router/Navi';
 import {useNavigation} from '@react-navigation/native';
 
 const Register = () => {
@@ -43,13 +43,13 @@ const Register = () => {
       return;
     }
 
-    apiRegister(email, password)
+    apiRegister(username,email, password)
       .then(res => {
         console.log('reg res: ' , res);
         if (!res) {
           Alert.alert("you need user to login ");
         } else  {
-          navigation.navigate('Home');
+          console.warn("hi")
         }
       })
 
@@ -75,6 +75,13 @@ const Register = () => {
       <View style={styles.body}>
         <View style={styles.unterBody}>
           <Text style={styles.background}>Register</Text>
+          <Text style={styles.text}>UserName</Text>
+          <TextInput
+            value={username}
+            style={styles.textEmail}
+            onChangeText={setUsername}
+            placeholder="Enter Email"
+          />
 
           <Text style={styles.text}>Email</Text>
           <TextInput
@@ -93,7 +100,7 @@ const Register = () => {
 
           <View style={styles.knopfBody}>
             <TouchableOpacity
-              onPress={()=> navigation.navigate('Home')}
+              onPress={()=> register()}
               style={styles.loginK}>
               <Text style={styles.textTK}>Go to Login</Text>
             </TouchableOpacity>

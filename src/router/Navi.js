@@ -8,6 +8,7 @@ import ProducInfo from '../Screens/ProducInfo';
 import CartScreen from '../Screens/CartScreen';
 import Login from '../Screens/Login';
 import Register from '../Screens/Register';
+import Payments from '../Screens/Payments';
 
 
 const Navi = () => {
@@ -15,7 +16,7 @@ const Navi = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="login"
+        initialRouteName="intro"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="intro" component={Intro} />
         <Stack.Screen name="login" component={Login} />
@@ -27,6 +28,7 @@ const Navi = () => {
           options={{presentation: 'modal'}}
         />
         <Stack.Screen name="cart" component={CartScreen} />
+        <Stack.Screen name="payments" component={Payments} />
       </Stack.Navigator>
     </NavigationContainer>
   );

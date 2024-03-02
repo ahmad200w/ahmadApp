@@ -7,15 +7,17 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 
 import Anzeige from '../Components/Anzeige';
 import {useNavigation} from '@react-navigation/native';
 import ShoppingsProvider, {ShoppingContext} from '../context/ShoppingsProvider';
+import Search from '../Components/Search';
+import {current} from '@reduxjs/toolkit';
 
 const Home = () => {
-  const {data, datai} = useContext(ShoppingContext);
 
+  const {data, datai} = useContext(ShoppingContext);
   const navigation = useNavigation();
   const sendInfos = () => {
     navigation.navigate('info', {id: data.id});
@@ -26,20 +28,41 @@ const Home = () => {
   const [Selcted, SetSelcted] = useState(false);
   const [cont, setCont] = useState(0);
   const {width, height} = useWindowDimensions();
+  const [slize, setSlize] = useState(0);
 
-  const filterBy = (proprty , val) => {
-    return data.filter(item => item[proprty] === val)
-  }
+  const filterBy = (proprty, val) => {
+    return data.filter(item => item[proprty] === val);
+  };
+
+
+  
+   
+    const searchFilter = useCallback((searchText) => {
+      if (!searchText || searchText.trim() === "") {
+        setDatei(data); 
+      } else {
+        const filteredData = data.filter(item => {
+          // شروط التغيير
+          return (
+            item.phoneType.toLowerCase().includes(searchText.toLowerCase()) ||
+            item.phone.toLowerCase().includes(searchText.toLowerCase())
+            
+          );
+        });
+        setDatei(filteredData);
+      }
+    }, [data, setDatei]);  
+
 
   const pressFilter = [
     {
       id: 0,
-      text: '<8Ram>',
+      text: '8Ram',
       onpresshandel: () => {
         // const highRam = data.filter(item => item.ram === 8);
-        setDatei(filterBy('ram' , 8));
+        setDatei(filterBy('ram', 8));
       },
-      isSelcted:Selcted
+      isSelcted: slize === 0 ? true : false,
     },
     {
       id: 1,
@@ -48,7 +71,7 @@ const Home = () => {
         const highRam = data.filter(item => item.ram > 8);
         setDatei(highRam);
       },
-      isSelcted:Selcted
+      isSelcted: slize === 1 ? true : false,
     },
     {
       id: 2,
@@ -57,7 +80,7 @@ const Home = () => {
         const lowPreis = data.filter(item => item.newPrice <= 750);
         setDatei(lowPreis);
       },
-      isSelcted:Selcted
+      isSelcted: slize === 2 ? true : false,
     },
     {
       id: 3,
@@ -66,58 +89,58 @@ const Home = () => {
         const heightPreis = data.filter(item => item.newPrice > 750);
         setDatei(heightPreis);
       },
-      isSelcted:Selcted
+      isSelcted: slize === 3 ? true : false,
     },
     {
       id: 4,
-      text: '512gb',
+      text: '512GB',
       onpresshandel: () => {
         const filterData = data.filter(item =>
           item.Speicher.some(Speicher => Speicher === 512),
         );
         setDatei(filterData);
       },
-      isSelcted:Selcted
+      isSelcted: slize === 4 ? true : false,
     },
     {
-      id: 4,
-      text: 'All',
+      id: 5,
+      text: 'all',
       onpresshandel: () => {
         setDatei(data);
       },
-      isSelcted:Selcted
+      isSelcted: slize === 5 ? true : false,
     },
   ];
 
   const flattlistItemforTextIcon = ({item, index}) => {
     return (
       <View style={styles.knopfText}>
-        {  <TouchableOpacity
-          onPress={() => {
-            item.onpresshandel();
-            
-            
-          }}
-          style={[
-            styles.textBody,
-            { backgroundColor:  item.isSelcted ? 'white' : '#332C39'},
-          ]}>
-          <Text
-            style={[styles.text, {color: item.isSelcted
-           ? '#332C39' : 'white'}]}>
-              
-            {item.text}
-          </Text>
-        </TouchableOpacity>
+        {
+          <TouchableOpacity
+            onPress={() => {
+              item.onpresshandel();
+              setSlize(index);
+            }}
+            style={[
+              styles.textBody,
+              {backgroundColor: item.isSelcted ? 'white' : 'black'},
+            ]}>
+            <Text
+              style={[
+                styles.text,
+                {color: item.isSelcted ? 'black' : 'white'},
+              ]}>
+              {item.text}
+            </Text>
+          </TouchableOpacity>
         }
-       
       </View>
     );
   };
-  
 
   return (
-    <SafeAreaView style={{backgroundColor: '#609EA2'}}>
+    <SafeAreaView style={{backgroundColor: '#FEBE10', alignItems: 'center'}}>
+      <Search searchFilter={searchFilter} />
       <View style={[styles.ersteSeite, {width: width, height: height}]}>
         <View>
           <FlatList
@@ -142,7 +165,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   ersteSeite: {
-    backgroundColor: '#609EA2',
+    backgroundColor: '#FEBE10',
   },
   textBody: {
     width: 90,

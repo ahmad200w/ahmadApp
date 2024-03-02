@@ -1,58 +1,87 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, useWindowDimensions, Image, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 
 import { ShoppingContext } from '../context/ShoppingsProvider'
+import { useDispatch } from 'react-redux'
 
-const FlatlistView = () => {
-    const {setCart,cart,total,setTotal,cont,setCont}=useContext(ShoppingContext)
+const FlatlistView = ({data, index}) => {
+  const {setCart, cart, total, setTotal, cont, setCont} =
+  useContext(ShoppingContext);
+    const {width, height} = useWindowDimensions();
+
+  
+
+   
     const handelIncrease = () => {
-
-      
-        setCart(prevCart => {
-          const updatedCart = prevCart.map(item => {
-            if (item.id === item.id) {
+      setCart((prevCart) => {
+        const updatedCart = prevCart.map((item) => {
+          if (item.id === data.id) {
+            return {
+              ...item,
+              quantity: item.quantity + 1,
+              totalPrice: item.totalPrice + item.newPrice,
+            };
+          }
+          return item;
+        });
+        return updatedCart;
+      });
+      setCont((prevCont) => prevCont + 1);
+      setTotal((prevTotal) => prevTotal + data.newPrice);
+    };
+  /*
+    const handelDecrease = () => {
+      if (data.quantity > 0) {
+        setCart((prevCart) => {
+          const updatedCart = prevCart.map((item) => {
+            if (item.id === data.id && item.count > 0) {
               return {
                 ...item,
-                count: item.count + 1,
-                totalPrice: item.totalPrice + item.newPrice
+                quantity: item.quantity - 1,
+                totalPrice: item.totalPrice - item.newPrice,
               };
             }
             return item;
-          });
+          }).filter((item)=> item.quantity>0);
           return updatedCart;
         });
-        setCont(prevCont => prevCont + 1);
-        setTotal(prevTotal => prevTotal + item.newPrice);
-      };
-      
-      const handelDecrease = () => {ezetwtweqgwrhhrhrjtzuuuztzdwdqfs
-        if (item.count > 0) {
-          setCart(prevCart => {
-            const updatedCart = prevCart.map(item => {
-              if (item.id === item.id && item.count > 0) {
-                return {
-                  ...item,
-                  count: item.count - 1,
-                  totalPrice: item.totalPrice - item.newPrice
-                };
-              }
-              return item;
-            });
-            return updatedCart;
-          });
-          setCont(prevCont => prevCont - 1);
-          setTotal(prevTotal => prevTotal - item.newPrice);
-        }
-      };
+        setCont((prevCont) => prevCont - 1);
+        setTotal((prevTotal) => prevTotal - data.newPrice);
+      }
+     
+    };*/
+  
+    const handelDecrease = () => {
+      if (data.quantity > 0) {
+        setCart((prevCart) => {
+          const updatedCart = prevCart.map((item) => {
+            if (item.id === data.id && item.count > 0) {
+              return {
+                ...item,
+                quantity: item.quantity - 1,
+                totalPrice: item.totalPrice - item.newPrice,
+              };
+            }
+            return item;
+          }).filter((item)=> item.quantity>0);
+          return updatedCart;
+        });
+        setCont((prevCont) => prevCont - 1);
+        setTotal((prevTotal) => prevTotal - data.newPrice);
+      }
+     
+    };
+ 
+
   return (
     <View
     style={[styles.item, {width: 0.9 * width, height: height * 0.15}]}>
     <View style={styles.phoneImage}>
-      <Image source={item.backgroundImage} style={styles.image} />
+      <Image source={data.backgroundImage} style={styles.image} />
     </View>
     <View style={{flexDirection: 'column'}}>
-      <Text style={styles.text}>{item.phone}</Text>
-      <Text style={styles.text}>{item.newPrice}$</Text>
+      <Text style={styles.text}>{data.phone}</Text>
+      <Text style={styles.text}>{data.newPrice}$</Text>
     </View>
     <View style={styles.preisView}>
       <View style={styles.viewADDminus}>
@@ -62,7 +91,7 @@ const FlatlistView = () => {
             source={require('../assets/icons/add.png')}
           />
         </TouchableOpacity  >
-        <Text style={styles.textP}>0</Text>
+        <Text style={styles.textP}>{data.quantity}</Text>
         <TouchableOpacity onPress={handelDecrease} style={styles.minus}>
           <Image
             style={{width: 24, height: 24}}
@@ -81,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   item: {
-    backgroundColor: '#609EA2',
+    backgroundColor: '#FEBE10',
     borderRadius: 12,
     flexDirection: 'row',
     padding: 10,
@@ -89,7 +118,7 @@ const styles = StyleSheet.create({
     margin:5,
   },
   phoneImage: {
-    backgroundColor: '#332C39',
+    backgroundColor: 'white',
     width: 90,
     height: 90,
     borderRadius: 30,

@@ -47,17 +47,19 @@ const ShoppingsProvider = ({children}) => {
      },[])
     */}
  const addtoCart = useCallback(item => {
+  // to check if item inside the cart
       const itemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+  
       if (itemIndex !== -1) {
         setCart(prevCart => {
           const updatedCart = prevCart.map((cartItem, index) => {
 
-            console.log(itemIndex)
+          
             if (index === itemIndex) {
               return {
                 // alle items sind darin 
                 ...cartItem,
-                count: cartItem.count + 1,
+                cont: cartItem.quantity + 1,
                 totalPrice: cartItem.totalPrice + cartItem.newPrice
               };
             }
@@ -67,7 +69,7 @@ const ShoppingsProvider = ({children}) => {
         });
         setTotal(prevTotal => prevTotal + item.newPrice);
       } else {
-        const newItem = { ...item, count: 1, totalPrice: item.newPrice };
+        const newItem = { ...item, count: cont+1, totalPrice: item.newPrice };
         setCart(prevCart => [...prevCart, newItem]);
         setCont(prevCont => prevCont + 1);
         setTotal(prevTotal => prevTotal + item.newPrice);

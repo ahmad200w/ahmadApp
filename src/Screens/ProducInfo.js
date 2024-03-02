@@ -15,6 +15,7 @@ import data from '../assets/data';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ShoppingContext } from '../context/ShoppingsProvider';
+import Add from '../Components/Add';
 
 const ProducInfo = () => {
   const {addtoCart}=useContext(ShoppingContext)
@@ -54,11 +55,11 @@ const ProducInfo = () => {
           {/* Description */}
           <Text style={styles.description}>{data[id].description}</Text>
         </View>
-        <Text>paasen zu diesem Gerät</Text>
-        <View style={styles.zubehoere}>
-          
+        <Text style={styles.WTP}>with this product</Text>
+        <Add/>
+        <View></View>
         </View>
-        </View>
+        
       </ScrollView>
 
       {/* Add to cart button */}
@@ -136,5 +137,9 @@ const styles = StyleSheet.create({
     borderRadius:30,
     marginBottom:70,
     margin:10
+  },
+  WTP:{
+    fontSize:20,
+    fontWeight:'900'
   }
 });

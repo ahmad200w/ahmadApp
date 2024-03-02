@@ -21,7 +21,7 @@ const Anzeige = ({data, start}) => {
   return (
     <View>
       <View
-        style={[styles.anzeigeV, {width: 0.9 * width, height: height * 0.25}]}>
+        style={[styles.container, {width: 0.9 * width, height: height * 0.25}]}>
         <View
           style={{
             flexDirection: 'row',
@@ -35,7 +35,7 @@ const Anzeige = ({data, start}) => {
           <TouchableOpacity
             style={styles.jetztKaufen}
             onPress={() => navigation.navigate('info', {id: data.id})}>
-            <Text style={styles.textKaufen}>mehr Info</Text>
+            <Text style={styles.textKaufen}>more Info</Text>
           </TouchableOpacity>
         </View>
 
@@ -50,7 +50,7 @@ const Anzeige = ({data, start}) => {
 };
 
 const styles = StyleSheet.create({
-  anzeigeV: {
+  container: {
     backgroundColor: '#F0EEED',
 
     alignItems: 'center',

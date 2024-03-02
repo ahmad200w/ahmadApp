@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {SafeAreaView, StyleSheet, Touchable, TouchableOpacity, View} from 'react-native';
 
 //import Navigator from './scrWA/Router/Navigator';
 
@@ -15,7 +15,10 @@ import ProducInfo from './src/Screens/ProducInfo';
 
 import ShoppingsProvider from './src/context/ShoppingsProvider';
 import CartScreen from './src/Screens/CartScreen';
-import Navigator from './scrWA/Router/Navigator';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Payments from './src/Screens/Payments';
+
 
 
   {/* 
@@ -25,13 +28,14 @@ import Navigator from './scrWA/Router/Navigator';
   */}
 
 const App = () => {
+ 
+  
   return (
-<ShoppingsProvider>
-  <Navi /> 
-  </ShoppingsProvider>
+    <ShoppingsProvider>
+    <Navi /> 
+    </ShoppingsProvider>
 
-
-  );
+  )
 };
 const styles = StyleSheet.create({
  

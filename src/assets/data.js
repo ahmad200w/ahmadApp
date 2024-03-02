@@ -25,6 +25,7 @@ export default [
         `  ,
         oldPrice: 750,
         newPrice: 650,
+        quantity:1
     },{
         id:1,
         phoneType:"Samsung",
@@ -49,6 +50,7 @@ export default [
         `  ,
         oldPrice: 1300,
         newPrice: 850,
+        quantity:1
     },
     {
         id:2,
@@ -74,6 +76,7 @@ export default [
         `,
         oldPrice: 850,
         newPrice: 750,
+        quantity:1
     },
     {
         id:3,
@@ -100,6 +103,7 @@ export default [
         ` ,
         oldPrice: 1050,
         newPrice: 950,
+        quantity:1
     },
     {
         id:4,
@@ -126,6 +130,7 @@ export default [
         ` ,
         oldPrice: 1350,
         newPrice: 1100,
+        quantity:1
     }
 
 

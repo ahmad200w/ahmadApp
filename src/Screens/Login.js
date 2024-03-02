@@ -2,9 +2,11 @@ import { Dimensions, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { apiLogin } from '../../api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Login = () => {
     const navigation=useNavigation()
+    const [user,setUser]=useState("")
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
     const goToRegister =()=>{
@@ -12,25 +14,55 @@ const Login = () => {
     }
     const goToIntro=()=>{
 
-        navigation.navigate('intro')
+        navigation.navigate('Home')
     }
 
 
-    const login =  () => {
-        apiLogin(email,password)
-        .then(res => {
-            if(res){
-                console.log(password,email)
-                navigation.navigate('intro')
-                return "sucess"
-              
-            }else{
-                return 'no data '
+    const login =  async () => {
+        try {
+            const data = await apiLogin(user, email, password);
+            if (data && data._id) {
+              const userDataToStore = {
+                username:data.userName,
+                email: data.email,
+                password: data.password,
+              };
+          
+              await AsyncStorage.setItem("emailLogin", JSON.stringify(userDataToStore));
+          
+              navigation.navigate('Home');
             }
-        }).catch(err=>{
+        
+        
+            
+             
+            
+        } catch(err){
             return err
-        })
+        }
     }
+    
+
+ 
+
+    const fetchToken = async () => {
+        try {
+          const afterToken = await AsyncStorage.getItem("emailLogin");
+          console.log(afterToken)
+         
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      
+      // تنفيذ login
+   
+      
+      // تنفيذ fetchToken بعد login
+
+      
+      fetchToken();
+   
 
   return (
 
@@ -38,20 +70,25 @@ const Login = () => {
     <View style={styles.body}>
        
         <View style={styles.unterBody}>
+            
         <Text style={styles.Welcome}> HandyStore</Text>
+        <Text style={styles.text}>User</Text>
+        <TextInput  value={user} style={styles.userInput}
+        onChangeText={(text)=>setUser(text)}
+        placeholder='Enter Email' />
             <Text style={styles.text}>Email</Text>
-        <TextInput  value={email} style={styles.textEmail}
+        <TextInput  value={email} style={styles.emailInput}
         onChangeText={(text)=>setEmail(text)}
         placeholder='Enter Email' />
         <Text style={styles.text}>Pass</Text>
-        <TextInput  value={password} style={styles.textPass}
+        <TextInput  value={password} style={styles.passInput}
         onChangeText={(text)=>setPassword(text)}
          placeholder='Enter Pass'/>
           <View style={styles.knopfBody}>
     <TouchableOpacity onPress={goToIntro} style={styles.registerK}>
         <Text style={styles.textTK}>Register</Text>
     </TouchableOpacity>
-    <TouchableOpacity onPress={async ()=> await login()} style={styles.loginK}>
+    <TouchableOpacity onPress={  ()=>   login()} style={styles.loginK}>
     <Text style={styles.textTK}>Login</Text>
     </TouchableOpacity>
     </View>
@@ -87,22 +124,38 @@ const styles = StyleSheet.create({
         fontWeight:'900',
         fontSize:48,
         color:'#332C39'
-    },
-    textEmail:{
-      
-       borderWidth:0.5,
+    },userInput:{
+          // borderWidth:0.5,
        width:"80%",
        height:"9%",
-       borderRadius:10,
+       borderRadius:3,
        margin:7,
+       padding:5,
+       borderStartWidth:0,
+       borderBottomWidth:2
+    },
+    emailInput:{
+      
+        // borderWidth:0.5,
+       width:"80%",
+       height:"9%",
+       borderRadius:3,
+       margin:7,
+       padding:5,
+       borderStartWidth:0,
+       borderBottomWidth:2
        
     },
 
-    textPass:{
-        borderWidth:0.5,
+    passInput:{
+       // borderWidth:0.5,
+
         width:"80%",
         height:"9%",
-        borderRadius:10
+        borderRadius:3,
+        padding:5,
+        borderStartWidth:0,
+        borderBottomWidth:2
     },text:{
         right:120,
         fontSize:15,

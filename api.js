@@ -1,5 +1,7 @@
+
 export const baseURL = 'https://ka-zkkx.onrender.com';
 
+//https://ka-zkkx.onrender.com
 
 const fetchApi = async (link, method, body) => {
   const url = baseURL + link;
@@ -17,18 +19,43 @@ export const AdditionalUserInfo = en => {
   console.log(fetchApi);
 };
 
-export const apiLogin = async (email, password) => {
+export const apiLogin = async (user,email, password) => {
   const link = '/Login';
-  return await fetchApi(link, 'POST', {email: email, pass: pass}).then(
-    res => res,
-  );
+  try{
+     const response = await fetchApi(link, 'POST', {userName:user,email: email, password: password})
+     return response;
+  }catch(err){
+    console.log("error",err)
+  }
+ 
+  
 };
-
-export const apiRegister = async (email, password) => {
+ 
+export const apiRegister = async (userName,email, password) => {
   const link = '/Register';
   body = {
+    userName:userName,
     email: email.toLowerCase(),
     password: password,
   };
   return await fetchApi(link, 'POST', body);
+};
+
+export const orderData = async (orders) => {
+  const link = '/sendOrder';
+
+  const requestBody = {
+    email: orders.email,
+    password: orders.password,
+    order: orders.orders,
+    total: orders.total,
+    username: orders.username
+  };
+
+  console.log('Request Body:', requestBody);
+
+  const response = await fetchApi(link, 'POST', requestBody);
+  console.log('Response:', response); // تسجيل الرد
+
+  return response;
 };
