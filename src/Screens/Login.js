@@ -9,12 +9,10 @@ const Login = () => {
     const [user,setUser]=useState("")
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
-    const goToRegister =()=>{
-        navigation.navigate('register')
-    }
-    const goToIntro=()=>{
+   
+    const goToRegister=()=>{
 
-        navigation.navigate('Home')
+        navigation.navigate('register')
     }
 
 
@@ -117,7 +115,7 @@ const login = async () => {
         onChangeText={(text)=>setPassword(text)}
          placeholder='Enter Pass'/>
           <View style={styles.knopfBody}>
-    <TouchableOpacity onPress={goToIntro} style={styles.registerK}>
+    <TouchableOpacity onPress={goToRegister} style={styles.registerK}>
         <Text style={styles.textTK}>Register</Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={  ()=>   login()} style={styles.loginK}>

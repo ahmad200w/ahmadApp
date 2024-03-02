@@ -44,12 +44,13 @@ const Register = () => {
     }
 
     apiRegister(username,email, password)
+       apiRegister(username,email, password)
       .then(res => {
         console.log('reg res: ' , res);
         if (!res) {
           Alert.alert("you need user to login ");
         } else  {
-          console.warn("hi")
+          navigation.navigate('login')
         }
       })
 
