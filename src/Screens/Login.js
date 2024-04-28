@@ -9,29 +9,30 @@ const Login = () => {
     const [user,setUser]=useState("")
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
-   
-    const goToRegister=()=>{
-
+    const goToRegister =()=>{
         navigation.navigate('register')
+    }
+    const goToIntro=()=>{
+
+        navigation.navigate('Home')
     }
 
 
-    /*const login =  async () => {
-        try {
-            const data = await apiLogin(user, email, password);
-            if (data && data._id) {
-              const userDataToStore = {
-                username:data.userName,
-                email: data.email,
-                password: data.password,
-              };
+    const login =  async () => {
+        try{
+            const data = await apiLogin(user,email,password)
+            if(data){
+                console.log(res)
+                const token =  await res.JSON.parse(data)
+          AsyncStorage.setItem("emailLogin",token)
           
-              await AsyncStorage.setItem("emailLogin", JSON.stringify(userDataToStore));
-          
-              navigation.navigate('Home');
+            console.log(data)
+
+            }else{
+                console.log('its  worng')
             }
-        
-        
+           
+   
             
              
             
@@ -39,64 +40,11 @@ const Login = () => {
             return err
         }
     }
-*/
-const login = async () => {
-    try {
-      const data = await apiLogin(user, email, password);
-      if (data && data._id) {
-        const userDataToStore = {
-          username: data.userName,
-          email: data.email,
-          
-        };
-      
-  
-        // تغيير ترتيب الخصائص هنا
-        const tokenToSave = {
-          username: userDataToStore.username,
-          email: userDataToStore.email,
-          password: password,
-
-
-        };
-        console.log(password)
-  
-        await AsyncStorage.setItem("emailLogin", JSON.stringify(tokenToSave));
-  
-        navigation.navigate('Home');
-      }
-    } catch (err) {
-      console.error(err);
-      // يمكنك إدراج التعامل مع الأخطاء هنا
-    }
-  };
-  
-    
-
- 
-
-    const fetchToken = async () => {
-        try {
-          const afterToken = await AsyncStorage.getItem("emailLogin");
-          console.log(afterToken)
-         
-        } catch (err) {
-          console.error(err);
-        }
-      }
-      
-      // تنفيذ login
-   
-      
-      // تنفيذ fetchToken بعد login
-
-      
-      fetchToken();
-   
 
   return (
 
     <SafeAreaView style={{backgroundColor:'#332C39'}}>
+        
     <View style={styles.body}>
        
         <View style={styles.unterBody}>
@@ -115,10 +63,10 @@ const login = async () => {
         onChangeText={(text)=>setPassword(text)}
          placeholder='Enter Pass'/>
           <View style={styles.knopfBody}>
-    <TouchableOpacity onPress={goToRegister} style={styles.registerK}>
+    <TouchableOpacity onPress={goToIntro} style={styles.registerK}>
         <Text style={styles.textTK}>Register</Text>
     </TouchableOpacity>
-    <TouchableOpacity onPress={  ()=>   login()} style={styles.loginK}>
+    <TouchableOpacity onPress={  ()=>   navigation.navigate("") } style={styles.loginK}>
     <Text style={styles.textTK}>Login</Text>
     </TouchableOpacity>
     </View>
