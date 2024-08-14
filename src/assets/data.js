@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 
 export default [
     {
@@ -138,3 +139,75 @@ export default [
 
 
 ]
+export const styles = StyleSheet.create({
+  body: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputStyle: {
+    marginTop: 30,
+  },
+  cardinput: {
+    width: 250,
+    height: 40,
+    borderWidth: 0.5,
+    borderRadius: 10,
+    padding: 5,
+    fontSize: 25,
+    fontWeight: '600',
+    backgroundColor: '#F0EEED',
+  },
+  cardNummerStyle: {
+    fontSize: 22,
+    fontWeight: '600',
+  },
+  cvv: {
+    width: 100,
+    height: 40,
+    borderWidth: 0.5,
+    borderRadius: 10,
+    padding: 5,
+    fontSize: 25,
+    fontWeight: '600',
+    backgroundColor: '#F0EEED',
+    margin: 2,
+  },
+  secoundinputStyle: {
+    flexDirection: 'row',
+    marginTop: 30,
+    left: 22,
+  }, total: {
+    marginTop: 250,
+    width: 300,
+    height: 100,
+    backgroundColor: 'black',
+    borderRadius: 100,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  totalText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '900',
+    left: 50,
+  },
+  payArrow: {
+    width: 50,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor: 'white',
+
+    right: 60,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  arrow: {
+    width: 40,
+    height: 40
+  }, fillText: {
+    fontSize: 30,
+    fontWeight: '900',
+    marginTop: 300
+  }
+});

@@ -49,6 +49,8 @@ const ShoppingsProvider = ({children}) => {
  const addtoCart = useCallback(item => {
   // to check if item inside the cart
       const itemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+
+      console.log(itemIndex,"is minus 1 or not")
   
       if (itemIndex !== -1) {
         setCart(prevCart => {
@@ -59,7 +61,7 @@ const ShoppingsProvider = ({children}) => {
               return {
                 // alle items sind darin 
                 ...cartItem,
-                cont: cartItem.quantity + 1,
+                quantity: cartItem.quantity + 1,
                 totalPrice: cartItem.totalPrice + cartItem.newPrice
               };
             }

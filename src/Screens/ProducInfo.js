@@ -24,6 +24,7 @@ const ProducInfo = () => {
   const [product, setProduct] = useState({});
   const {width, height} = useWindowDimensions();
   const route = useRoute();
+  // empfang der  data ...
   const id = route.params.id;
  
 
@@ -55,7 +56,7 @@ const ProducInfo = () => {
           {/* Description */}
           <Text style={styles.description}>{data[id].description}</Text>
         </View>
-        <Text style={styles.WTP}>with this product</Text>
+        <Text style={styles.withThisProduct}>with this product</Text>
         <Add/>
         <View></View>
         </View>
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     marginBottom:70,
     margin:10
   },
-  WTP:{
+  withThisProduct:{
     fontSize:20,
     fontWeight:'900'
   }

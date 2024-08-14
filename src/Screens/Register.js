@@ -11,6 +11,7 @@ import React, {useEffect, useState} from 'react';
 import {apiRegister, baseURL} from '../../api';
 import Navi from '../router/Navi';
 import {useNavigation} from '@react-navigation/native';
+import useRegister from './hooks/useRegister';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -22,57 +23,14 @@ const Register = () => {
   const loginWithData = () => {
     navigation.navigate('login');
   };
-  const emailCheck = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    let isEmailUPassEmpty =
-      email.trim().length == 0 || password.trim().length == 0;
-    if (isEmailUPassEmpty) {
-      return 'email oder password ist nicht vollständig';
-    } else if (!emailRegex.test(email)) {
-      return 'tipp die richtige Email ein .';
-    }
-    return false;
-  };
 
-
-
-  const register = () => {
-    let erroMassnahme = emailCheck();
-    if (erroMassnahme) {
-      Alert.alert(erroMassnahme);
-      return;
-    }
-
-    apiRegister(username,email, password)
-       apiRegister(username,email, password)
-      .then(res => {
-        console.log('reg res: ' , res);
-        if (!res) {
-          Alert.alert("you need user to login ");
-        } else  {
-          navigation.navigate('login')
-        }
-      })
-
-    // fetch(baseURL + '/Register', {
-    //   method: 'POST',
-    //   body: {
-    //     email,
-    //     password,
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(resJson => {
-    //     console.log('wewe : ', resJson);
-    //   });
-
-    // .catch(e => {
-    //   console.log('register error', e);
-    // });
+  const {register} = useRegister();
+  const handelRegister = async () => {
+    await register(username, email, password);
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: '#332C39'}}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.body}>
         <View style={styles.unterBody}>
           <Text style={styles.background}>Register</Text>
@@ -100,9 +58,7 @@ const Register = () => {
           />
 
           <View style={styles.knopfBody}>
-            <TouchableOpacity
-              onPress={()=> register()}
-              style={styles.loginK}>
+            <TouchableOpacity onPress={handelRegister} style={styles.loginK}>
               <Text style={styles.textTK}>Go to Login</Text>
             </TouchableOpacity>
           </View>
@@ -115,6 +71,9 @@ const Register = () => {
 export default Register;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#332C39',
+  },
   textusername: {
     right: 100,
     fontSize: 15,
@@ -146,6 +105,7 @@ const styles = StyleSheet.create({
     height: '9%',
     borderRadius: 10,
     margin: 7,
+    padding:5,
   },
 
   textPass: {
@@ -153,6 +113,8 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '9%',
     borderRadius: 10,
+    padding:5,
+
   },
   text: {
     right: 120,

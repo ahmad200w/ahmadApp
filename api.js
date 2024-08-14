@@ -1,41 +1,50 @@
-export const baseURL = 'http://localhost:7800';
+export const baseURL = 'http://localhost:4900';
 
 //https://ka-zkkx.onrender.com
 
-const fetchApi = async (link, method, body) => {
+const fetchApi = async (link, method , body) => {
   const url = baseURL + link;
 
-  return await fetch(url, {
-    method: method || 'GET',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(body),
-  })
-    .then(res => res.json())
-    .catch(e => console.log('fetch error: ', e));
-};
-export const AdditionalUserInfo = en => {
-  return fetchApi('/app');
+  try {
+    const response = await fetch(url, {
+      method: method || 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body ? JSON.stringify(body) : undefined, 
+    });
 
-  console.log(fetchApi);
+    if (!response.ok) {
+      const errorText = await response.text(); // استخدم text() للحصول على تفاصيل الخطأ
+      throw new Error(errorText || 'Network response was not ok');
+    }
+
+    // حاول تحويل الاستجابة إلى JSON
+    try {
+      const data = await response.json();
+      return data;
+    } catch (parseError) {
+      throw new Error('Failed to parse JSON response');
+    }
+  } catch (error) {
+    console.error('fetchApi error:', error);
+    throw error; // إعادة رمي الخطأ للتعامل معه في المستوى الأعلى
+  }
 };
 
 export const apiLogin = async (user, email, password) => {
   const link = '/Login';
-  try {
-    const response = await fetchApi(link, 'POST', {
+
+    const body =  {
       userName: user,
       email: email,
       password: password,
-    });
-    return response;
-  } catch (err) {
-    console.log('error', err);
-  }
+    }
+    return await fetchApi(link, 'POST',body);;
+  
 
-  //.then(
-  //res => res,
-  // );
 };
+
 
 export const apiRegister = async (userName, email, password) => {
   const link = '/Register';
@@ -46,3 +55,18 @@ export const apiRegister = async (userName, email, password) => {
   };
   return await fetchApi(link, 'POST', body);
 };
+
+
+export const apiOrder = async (userName,email,password,orders,total)=>{
+const link ="//sendOrder"
+body ={
+  userName: userName,
+  email: email.toLowerCase(),
+  password: password,
+  orders:orders,
+  total:total
+}
+
+return await fetchApi(link, 'POST', body);
+  
+}

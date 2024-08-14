@@ -20,7 +20,7 @@ import FlatlistView from '../Components/FlatlistView';
 const CartScreen = () => {
   const navigation = useNavigation();
 
-  const {setCart, cart, total, setTotal, cont, setCont} =
+  const {cart, total} =
     useContext(ShoppingContext);
   const {width, height} = useWindowDimensions();
   const [product, setProduct] = useState();
@@ -41,8 +41,7 @@ const CartScreen = () => {
     };
   });
   /////
-  console.log(printProduct)
-  console.log('total',total)
+
 
   return (
     <SafeAreaView>
@@ -86,7 +85,7 @@ export default CartScreen;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-  },
+   },
   item: {
     backgroundColor: '#609EA2',
     borderRadius: 12,
