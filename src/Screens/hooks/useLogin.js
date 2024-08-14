@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { apiLogin } from '../../../api'; // تأكد من صحة المسار
+import { apiLogin } from '../../../api'; 
 
 const useLogin = () => {
   const navigation = useNavigation();
