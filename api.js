@@ -57,16 +57,20 @@ export const apiRegister = async (userName, email, password) => {
 };
 
 
-export const apiOrder = async (userName,email,password,orders,total)=>{
-const link ="//sendOrder"
-body ={
-  userName: userName,
-  email: email.toLowerCase(),
-  password: password,
-  orders:orders,
-  total:total
-}
+export const apiOrder = async (userName, email, orders, total) => {
+  const link = "/sendOrder";
+  const body = {
+    userName,
+    email: email.toLowerCase(),
+    orders,
+    total,
+  };
 
-return await fetchApi(link, 'POST', body);
-  
-}
+  try {
+   return await fetchApi(link, 'POST', body);
+
+  } catch (error) {
+    console.error("Error in apiOrder:", error);
+    throw error; 
+  }
+};

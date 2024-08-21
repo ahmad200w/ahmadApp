@@ -7,7 +7,7 @@ const formatNumberWithSpaces = value => {
    // التحقق من أن النص يحتوي على أرقام فقط
 
 
-   // التحقق من أن النص لا يتجاوز 10 أرقام
+   // no more then 10 digts .... visa numberSize ..
    
 
    export  const handleTextChange =(text)=>{
@@ -24,7 +24,8 @@ const formatNumberWithSpaces = value => {
    //  Ccv util...
 
   export const handleCcvChange = text => {
-    // يتحقق من أن القيمة تحتوي على 3 أرقام وتكون أرقامًا فقط
+
+    // 3 digts...
     const ccvRegex = /^\d{0,3}$/;
 
     if (ccvRegex.test(text)) {

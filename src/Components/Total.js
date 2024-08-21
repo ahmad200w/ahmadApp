@@ -1,11 +1,11 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
-const Total = ({open,total}) => {
+const Total = ({open,total,handleSendOrder}) => {
  
   return (<>
     {  open ? (<View style={styles.total}>
-        <TouchableOpacity onPress={()=> sendTheOrderWithId()} style={styles.payArrow}>
+        <TouchableOpacity onPress={handleSendOrder} style={styles.payArrow}>
             <Image style={styles.arrow} source={require('../assets/right-arrow.png')}/>
         </TouchableOpacity>
         <View>

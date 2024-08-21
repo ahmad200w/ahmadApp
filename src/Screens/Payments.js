@@ -1,6 +1,8 @@
 import {
+  Alert,
     Animated,
     Image,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -10,14 +12,15 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { orderData } from '../../api';
+import { apiOrder, orderData } from '../../api';
 import VisaCard from '../Components/VisaCard';
 import Total from '../Components/Total';
 import { handleCcvChange, handleTextChange } from '../helpers';
 import VisaCardInput from '../Components/VisaCardInput';
+import { sendOrdertoDatabase } from '../useOrder';
 
 const Payments = () => {
     const tab = createMaterialTopTabNavigator()
@@ -27,50 +30,88 @@ const Payments = () => {
   const [ccv, setCcv] = useState(0);
   const [open,setOpen]= useState(false)
   const router = useRoute()
-  const data = router.params.printProduct
+  const navigation = useNavigation();
+  const data = router.params.sendOrdersDatails
  
   const total = router.params.total
-
-  const fetchToken = async () => {
+/*
+  const printTheUser = async () => {
     try {
-      const afterToken = await AsyncStorage.getItem("emailLogin");
-      const parsedToken = JSON.parse(afterToken);
-  
-      console.log("Parsed Token:", parsedToken); // تحقق من قيمة parsedToken
-  
-      if (parsedToken && parsedToken.username && parsedToken.email && parsedToken.password) {
-        return parsedToken;
+      const data = await AsyncStorage.getItem("emailLogin");
+      if (data) {
+        const userAndEmail = JSON.parse(data);
+        const { userName, email } = userAndEmail;
+    
+        // إرجاع القيم
+        return { userName, email };
       } else {
-        return null;
+        console.log("data no exist ...");
+        return { userName: null, email: null };
       }
-    } catch (err) {
-      console.error(err);
-      return null;
+    } catch (error) {
+      console.log("Error:", error);
+      return { userName: null, email: null };
     }
   };
+  
+
+ 
+const sendOrdertoDatabase = async () => {
+  try {
+    // استرجاع بيانات المستخدم من AsyncStorage
+    const userData = await printTheUser();
     
+   
+    const orders = router.params.sendOrdersDatails;
+    const total = router.params.total;
+
+    // التحقق من أن userData يحتوي على البيانات الضرورية
+    if (!userData.userName || !userData.email) {
+      throw new Error('User data is incomplete');
+    }
+
+    // إرسال الطلب إلى قاعدة البيانات
+    const { data, status } = await apiOrder(userData.userName, userData.email, orders, total);
+
+    // التحقق من نجاح الطلب
+    if (status === 200) {
+      console.log("Order sent successfully:", data);
+    } else {
+      console.log("Failed to send order. Status code:", status);
+      console.log("Error details:", data);
+    }
+
+  } catch (error) {
+    console.log("Error 500 ...", error);
+  }
+};
+
 
 
 
  
+*/
 
+const handleSendOrder = async () => {
+  const result = await sendOrdertoDatabase(data, total);
+  console.log(result)
+  if (result) {
+    Alert.alert("Order sent successfully:", result);
+    /*
+    setTimeout(() => {
+      navigation.navigate("Home")
+    }, 5000);
+    */
+    
+  } else {
+    Alert.alert("Failed to send order:", result.error);
+  }
+};
 
-  const full = () => {
-    if (cardInput  !== 0 && ccv !== 0 && expiryDate !== 0) {
-      setOpen(true);
-    }else{
-        setOpen(false)
-    }
-  };
-  useEffect(() => {
-  full();
-  },[cardInput,ccv,expiryDate] );
+ 
   
 
-  const sendData = async()=>{
 
-
-  }
 
   const handelCardInput = inputNumber =>{
     const inputCardNumber =handleTextChange(inputNumber)
@@ -95,33 +136,7 @@ const Payments = () => {
   };
 
 
-  const sendTheOrderWithId = async () => {
-    try {
-        const tokenData = await fetchToken();
-        const { username, email, password } = tokenData;
-
-        const order = data; 
-        const orders =   {
-            username: username,
-            email: email,
-            password: 54321,
-             orders: order.map(item => ({
-                quantity: item.quantity,
-                phoneType: item.phoneType,
-                total: item.total
-            })),
-            total: total
-        };
-
-        const result = await orderData(orders);
-
-        console.log(result);
-        return result;
-    } catch (error) {
-        console.error(error);
-      
-    }
-};
+ 
   return (
     <SafeAreaView style={styles.body}>
     <VisaCard 
@@ -137,12 +152,15 @@ const Payments = () => {
        ccv={ccv}
 
        />
-      <Total open={open} total={total}/>
+      <Total open={open} total={total} handleSendOrder={handleSendOrder} setOpen={setOpen} />
+      <Pressable style={styles.sendButton} onPress={handleSendOrder}>
+        <Text style={styles.sendButtonText}>Send Order</Text>
+      </Pressable>
      
     </SafeAreaView>
   );
-};
 
+}
 export default Payments;
 
 const styles = StyleSheet.create({
@@ -182,5 +200,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30,
     left: 22,
-  }
+  },sendButton: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  sendButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });

@@ -30,36 +30,42 @@ const Register = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.body}>
-        <View style={styles.unterBody}>
-          <Text style={styles.background}>Register</Text>
-          <Text style={styles.text}>UserName</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.mainContainer}>
+        <View style={styles.formContainer}>
+          <Text style={styles.headerText}>Register</Text>
+          <Text style={styles.label}>Username</Text>
           <TextInput
             value={username}
-            style={styles.textEmail}
+            style={styles.usernameInput}
             onChangeText={setUsername}
-            placeholder="Enter Email"
+            placeholder="Enter Username"
           />
 
-          <Text style={styles.text}>Email</Text>
+          <Text style={styles.label}>Email</Text>
           <TextInput
             value={email}
-            style={styles.textEmail}
+            style={styles.emailInput}
             onChangeText={setEmail}
             placeholder="Enter Email"
           />
-          <Text style={styles.text}>Pass</Text>
+          <Text style={styles.label}>Password</Text>
           <TextInput
             value={password}
-            style={styles.textPass}
+            style={styles.passwordInput}
             onChangeText={setPassword}
-            placeholder="Enter Pass"
+            placeholder="Enter Password"
+            secureTextEntry
           />
 
-          <View style={styles.knopfBody}>
-            <TouchableOpacity onPress={handelRegister} style={styles.loginK}>
-              <Text style={styles.textTK}>Go to Login</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handelRegister} style={styles.registerButton}>
+              <Text style={styles.buttonText}>SignUp</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={()=> navigation.navigate("login")} style={styles.registerButton}>
+              <Text style={styles.buttonText}>Go to Login</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -71,61 +77,66 @@ const Register = () => {
 export default Register;
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
+    flex: 1,
     backgroundColor: '#332C39',
   },
-  textusername: {
-    right: 100,
-    fontSize: 15,
-    fontWeight: '900',
-  },
-  body: {
-    alignItems: 'center',
+  mainContainer: {
+    flex: 1,
     justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#332C39',
+    alignItems: 'center',
   },
-  background: {
-    fontSize: 40,
-    fontWeight: '900',
-    marginBottom: 40,
-  },
-  unterBody: {
+  formContainer: {
     backgroundColor: '#609EA2',
     width: '90%',
-    height: '80%',
+    padding: 20,
     borderRadius: 30,
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  textEmail: {
-    borderWidth: 0.5,
-    width: '80%',
-    height: '9%',
-    borderRadius: 10,
-    margin: 7,
-    padding:5,
+  headerText: {
+    fontSize: 40,
+    fontWeight: '900',
+    color: '#332C39',
+    marginBottom: 40,
   },
-
-  textPass: {
-    borderWidth: 0.5,
-    width: '80%',
-    height: '9%',
-    borderRadius: 10,
-    padding:5,
-
-  },
-  text: {
-    right: 120,
+  label: {
+    alignSelf: 'flex-start',
+    marginLeft: '10%',
     fontSize: 15,
     fontWeight: '900',
+    marginVertical: 5,
   },
-  knopfBody: {
-    flexDirection: 'row',
-    margin: 20,
+  usernameInput: {
+    width: '80%',
+    height: 40,
+    borderRadius: 10,
+    marginVertical: 7,
+    paddingHorizontal: 10,
+    borderBottomWidth: 0.5,
+    borderColor: '#333',
   },
-  loginK: {
+  emailInput: {
+    width: '80%',
+    height: 40,
+    borderRadius: 10,
+    marginVertical: 7,
+    paddingHorizontal: 10,
+    borderBottomWidth: 0.5,
+    borderColor: '#333',
+  },
+  passwordInput: {
+    width: '80%',
+    height: 40,
+    borderRadius: 10,
+    marginVertical: 7,
+    paddingHorizontal: 10,
+    borderBottomWidth: 0.5,
+    borderColor: '#333',
+  },
+  buttonContainer: {
+    marginTop: 20,
+  },
+  registerButton: {
     width: 250,
     height: 50,
     backgroundColor: '#332C39',
@@ -133,7 +144,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textTK: {
+  buttonText: {
     color: '#609EA2',
     fontSize: 16,
     fontWeight: '600',

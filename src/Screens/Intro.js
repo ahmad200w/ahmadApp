@@ -30,7 +30,7 @@ const Intro = () => {
     {
       id: 2,
       image: require('../assets/image/intorPhoto/s2.jpg'),
-      titel: 'Go to login screen',
+      titel: 'Login screen',
       toch: () => {
         navigation.navigate("login");
       },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   titel: {
-    fontSize: 12,
+    fontSize: 20,
     color: '#fff',
     fontWeight: '700',
   },

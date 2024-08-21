@@ -32,59 +32,62 @@ const Login = () => {
     await printTheUser()
   }
 
-  const printTheUser = async ()=>{
-
-    try{
-      const data = await AsyncStorage.getItem("emailLogin")
-      let copyOfData = JSON.parse(data)
-      console.log("the object is ",copyOfData)
-
+  const printTheUser = async () => {
+    try {
+      const data = await AsyncStorage.getItem("emailLogin");
+      if (data) {
+        const parsedData = JSON.parse(data);
+        
+        const { userName, email ,orders} = parsedData;
+  
+        // تسجيل المعلومات في الكونسول
+        console.log("name ", userName);
+        console.log("email : ", email);
+        console.log("email : ", orders);
+      } else {
+        console.log("keine Data");
+      }
+    } catch (error) {
+      console.log("error: ", error);
     }
-    catch(error){
+  };
+  
 
-      console.log("error",error)
-
-
-    }
-
-
-  }
 
 
   return (
-    <SafeAreaView style={{backgroundColor: '#332C39'}}>
-      <View style={styles.body}>
-        <View style={styles.unterBody}>
-          <Text style={styles.Welcome}> HandyStore</Text>
-          <Text style={styles.text}>User</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.formContainer}>
+          <Text style={styles.headerText}>PhoneStore</Text>
+          <Text style={styles.label}>User</Text>
           <TextInput
             value={user}
-            style={styles.userInput}
+            style={styles.input}
             onChangeText={text => setUser(text)}
-            placeholder="Enter Email"
+            placeholder="Enter Username"
           />
-          <Text style={styles.text}>Email</Text>
+          <Text style={styles.label}>Email</Text>
           <TextInput
             value={email}
-            style={styles.emailInput}
+            style={styles.input}
             onChangeText={text => setEmail(text)}
             placeholder="Enter Email"
           />
-          <Text style={styles.text}>Pass</Text>
+          <Text style={styles.label}>Password</Text>
           <TextInput
             value={password}
-            style={styles.passInput}
+            style={styles.input}
             onChangeText={text => setPassword(text)}
-            placeholder="Enter Pass"
+            placeholder="Enter Password"
+            secureTextEntry
           />
-          <View style={styles.knopfBody}>
-            <TouchableOpacity onPress={goToRegister} style={styles.registerK}>
-              <Text style={styles.textTK}>Register</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={goToRegister} style={styles.registerButton}>
+              <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handelLogin}
-              style={styles.loginK}>
-              <Text style={styles.textTK}>Login</Text>
+            <TouchableOpacity onPress={handelLogin} style={styles.loginButton}>
+              <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -96,69 +99,50 @@ const Login = () => {
 export default Login;
 
 const styles = StyleSheet.create({
-  body: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
+  safeArea: {
     backgroundColor: '#332C39',
+   flex :1,
   },
-  unterBody: {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+   
+  },
+  formContainer: {
     backgroundColor: '#609EA2',
     width: '90%',
-    height: '80%',
+    padding: 20,
     borderRadius: 30,
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  Welcome: {
-    marginBottom: 80,
-    right: 3,
-    fontWeight: '900',
+  headerText: {
     fontSize: 48,
+    fontWeight: '900',
     color: '#332C39',
+    marginBottom: 40,
   },
-  userInput: {
-    // borderWidth:0.5,
-    width: '80%',
-    height: '9%',
-    borderRadius: 3,
-    margin: 7,
-    padding: 5,
-    borderStartWidth: 0,
-    borderBottomWidth: 2,
-  },
-  emailInput: {
-    // borderWidth:0.5,
-    width: '80%',
-    height: '9%',
-    borderRadius: 3,
-    margin: 7,
-    padding: 5,
-    borderStartWidth: 0,
-    borderBottomWidth: 2,
-  },
-
-  passInput: {
-    // borderWidth:0.5,
-
-    width: '80%',
-    height: '9%',
-    borderRadius: 3,
-    padding: 5,
-    borderStartWidth: 0,
-    borderBottomWidth: 2,
-  },
-  text: {
-    right: 120,
+  label: {
+    alignSelf: 'flex-start',
+    marginLeft: '10%',
     fontSize: 15,
     fontWeight: '900',
+    marginVertical: 5,
   },
-  knopfBody: {
+  input: {
+    width: '80%',
+    height: 40,
+    borderRadius: 3,
+    marginVertical: 7,
+    paddingHorizontal: 10,
+    borderBottomWidth: 2,
+    borderColor: '#333',
+  },
+  buttonContainer: {
     flexDirection: 'row',
-    margin: 20,
+    marginTop: 20,
   },
-  registerK: {
+  registerButton: {
     width: 120,
     height: 50,
     backgroundColor: '#332C39',
@@ -167,7 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 5,
   },
-  loginK: {
+  loginButton: {
     width: 120,
     height: 50,
     backgroundColor: '#332C39',
@@ -175,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textTK: {
+  buttonText: {
     color: '#609EA2',
     fontSize: 16,
     fontWeight: '600',
