@@ -1,3 +1,5 @@
+import { Alert } from "react-native";
+
 export const baseURL = 'http://localhost:4900';
 
 //https://ka-zkkx.onrender.com
@@ -70,7 +72,7 @@ export const apiOrder = async (userName, email, orders, total) => {
    return await fetchApi(link, 'POST', body);
 
   } catch (error) {
-    console.error("Error in apiOrder:", error);
+    Alert.alert("network Error", error);
     throw error; 
   }
 };

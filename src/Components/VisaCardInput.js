@@ -18,7 +18,7 @@ const VisaCardInput = ({handelCardInput,handleDateChange,handleCcvChange,cardInp
         style={styles.cvv}
         placeholder="MM/YY"
         keyboardType="numeric"
-        maxLength={3}
+        maxLength={5}
         value={expiryDate}
         onChangeText={handleDateChange}
       />
@@ -27,6 +27,7 @@ const VisaCardInput = ({handelCardInput,handleDateChange,handleCcvChange,cardInp
         style={styles.cvv}
         placeholder="Ccv"
         value={ccv}
+        maxLength={3}
         onChangeText={handleCcvChange}
       />
     

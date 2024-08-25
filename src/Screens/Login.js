@@ -32,25 +32,7 @@ const Login = () => {
     await printTheUser()
   }
 
-  const printTheUser = async () => {
-    try {
-      const data = await AsyncStorage.getItem("emailLogin");
-      if (data) {
-        const parsedData = JSON.parse(data);
-        
-        const { userName, email ,orders} = parsedData;
   
-        // تسجيل المعلومات في الكونسول
-        console.log("name ", userName);
-        console.log("email : ", email);
-        console.log("email : ", orders);
-      } else {
-        console.log("keine Data");
-      }
-    } catch (error) {
-      console.log("error: ", error);
-    }
-  };
   
 
 

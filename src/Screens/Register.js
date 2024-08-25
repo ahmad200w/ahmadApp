@@ -31,6 +31,7 @@ const Register = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      
       <View style={styles.mainContainer}>
         <View style={styles.formContainer}>
           <Text style={styles.headerText}>Register</Text>

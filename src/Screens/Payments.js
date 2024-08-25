@@ -94,8 +94,8 @@ const sendOrdertoDatabase = async () => {
 
 const handleSendOrder = async () => {
   const result = await sendOrdertoDatabase(data, total);
-  console.log(result)
-  if (result) {
+  console.log(result," result issdsd")
+  if (result.message ==="Order sent successfully") {
     Alert.alert("Order sent successfully:", result);
     /*
     setTimeout(() => {
@@ -153,9 +153,7 @@ const handleSendOrder = async () => {
 
        />
       <Total open={open} total={total} handleSendOrder={handleSendOrder} setOpen={setOpen} />
-      <Pressable style={styles.sendButton} onPress={handleSendOrder}>
-        <Text style={styles.sendButtonText}>Send Order</Text>
-      </Pressable>
+      
      
     </SafeAreaView>
   );
