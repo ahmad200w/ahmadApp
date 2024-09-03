@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import ShoppingsProvider, {ShoppingContext} from '../context/ShoppingsProvider';
 import Search from '../Components/Search';
 import {current} from '@reduxjs/toolkit';
+import FilterButton from '../Components/FilterButton';
 
 const Home = () => {
 
@@ -111,35 +112,21 @@ const Home = () => {
       isSelcted: slize === 5 ? true : false,
     },
   ];
-
-  const flattlistItemforTextIcon = ({item, index}) => {
-    return (
-      <View style={styles.knopfText}>
-        {
-          <TouchableOpacity
-            onPress={() => {
-              item.onpresshandel();
-              setSlize(index);
-            }}
-            style={[
-              styles.textBody,
-              {backgroundColor: item.isSelcted ? 'white' : 'black'},
-            ]}>
-            <Text
-              style={[
-                styles.text,
-                {color: item.isSelcted ? 'black' : 'white'},
-              ]}>
-              {item.text}
-            </Text>
-          </TouchableOpacity>
-        }
-      </View>
-    );
+  const handlePress = (index) => {
+    pressFilter[index].onpresshandel();
+    setSlize(index);
   };
+  const flattlistItemforTextIcon = ({ item, index }) => (
+    <FilterButton
+      item={item}
+      index={index}
+      onPress={handlePress}
+      isSelected={slize === index}
+    />
+  );
 
   return (
-    <SafeAreaView style={{backgroundColor: '#FEBE10', alignItems: 'center'}}>
+    <SafeAreaView style={styles.container}>
       <Search searchFilter={searchFilter} />
       <View style={[styles.ersteSeite, {width: width, height: height}]}>
         <View>
@@ -164,28 +151,12 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
+  container:{
+    backgroundColor: '#FEBE10',
+     alignItems: 'center'
+    },
   ersteSeite: {
     backgroundColor: '#FEBE10',
   },
-  textBody: {
-    width: 90,
-    height: 35,
-    margin: 6,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  knopfText: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    flexDirection: 'row',
-  },
-  text: {
-    fontSize: 12,
-    fontWeight: '800',
-  },
-  unterSeite: {
-    backgroundColor: 'black',
-    borderRadius: 15,
-  },
+  
 });

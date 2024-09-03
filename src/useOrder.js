@@ -24,13 +24,13 @@ export const printTheUser = async () => {
   }
 };
 
-// إرسال الطلب إلى قاعدة البيانات
+// sende die Order ...
 export const sendOrdertoDatabase = async (orders, total) => {
   try {
-    // استرجاع بيانات المستخدم من AsyncStorage
+  // sprite .. userName and email 
     const userData = await printTheUser();
 
-    // التحقق من أن userData يحتوي على البيانات الضرورية
+    // i
     if (!userData.userName || !userData.email) {
       throw new Error('User data is incomplete');
       Alert.alert("userName or Email not exist ..")
