@@ -23,37 +23,33 @@ const Login = () => {
   const goToRegister = () => {
     navigation.navigate('register');
   };
-  
-  const {login}=useLogin();
 
-  const handelLogin =async()=>{
+  const {login} = useLogin();
 
-    await login(user,email,password);
-    await printTheUser()
-  }
+  const handelLogin = async () => {
+    await login(user, email, password);
+    await printTheUser();
+  };
 
   const printTheUser = async () => {
     try {
-      const data = await AsyncStorage.getItem("emailLogin");
+      const data = await AsyncStorage.getItem('emailLogin');
       if (data) {
         const parsedData = JSON.parse(data);
-        
-        const { userName, email ,orders} = parsedData;
-  
+
+        const {userName, email, orders} = parsedData;
+
         // تسجيل المعلومات في الكونسول
-        console.log("name ", userName);
-        console.log("email : ", email);
-        console.log("email : ", orders);
+        console.log('name ', userName);
+        console.log('email : ', email);
+        console.log('email : ', orders);
       } else {
-        console.log("keine Data");
+        console.log('keine Data');
       }
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
     }
   };
-  
-
-
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -66,6 +62,8 @@ const Login = () => {
             style={styles.input}
             onChangeText={text => setUser(text)}
             placeholder="Enter Username"
+            keyboardType={'email-address'}
+            autoCapitalize="none"
           />
           <Text style={styles.label}>Email</Text>
           <TextInput
@@ -73,6 +71,7 @@ const Login = () => {
             style={styles.input}
             onChangeText={text => setEmail(text)}
             placeholder="Enter Email"
+            autoCapitalize="none"
           />
           <Text style={styles.label}>Password</Text>
           <TextInput
@@ -81,9 +80,12 @@ const Login = () => {
             onChangeText={text => setPassword(text)}
             placeholder="Enter Password"
             secureTextEntry
+            autoCapitalize="none"
           />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={goToRegister} style={styles.registerButton}>
+            <TouchableOpacity
+              onPress={goToRegister}
+              style={styles.registerButton}>
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handelLogin} style={styles.loginButton}>
@@ -101,13 +103,12 @@ export default Login;
 const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: '#332C39',
-   flex :1,
+    flex: 1,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-   
   },
   formContainer: {
     backgroundColor: '#609EA2',

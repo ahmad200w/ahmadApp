@@ -31,10 +31,7 @@ const Register = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      
-      <View 
-      
-      style={styles.mainContainer}>
+      <View style={styles.mainContainer}>
         <View style={styles.formContainer}>
           <Text style={styles.headerText}>Register</Text>
           <Text style={styles.label}>Username</Text>
@@ -43,6 +40,7 @@ const Register = () => {
             style={styles.usernameInput}
             onChangeText={setUsername}
             placeholder="Enter Username"
+            autoCapitalize="none"
           />
 
           <Text style={styles.label}>Email</Text>
@@ -51,6 +49,7 @@ const Register = () => {
             style={styles.emailInput}
             onChangeText={setEmail}
             placeholder="Enter Email"
+            autoCapitalize="none"
           />
           <Text style={styles.label}>Password</Text>
           <TextInput
@@ -59,15 +58,20 @@ const Register = () => {
             onChangeText={setPassword}
             placeholder="Enter Password"
             secureTextEntry
+            autoCapitalize="none"
           />
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handelRegister} style={styles.registerButton}>
+            <TouchableOpacity
+              onPress={handelRegister}
+              style={styles.registerButton}>
               <Text style={styles.buttonText}>SignUp</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={()=> navigation.navigate("login")} style={styles.registerButton}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('login')}
+              style={styles.registerButton}>
               <Text style={styles.buttonText}>Go to Login</Text>
             </TouchableOpacity>
           </View>
