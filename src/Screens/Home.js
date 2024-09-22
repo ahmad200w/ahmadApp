@@ -128,7 +128,7 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Search searchFilter={searchFilter} />
-      <View style={[styles.ersteSeite, {width: width, height: height}]}>
+      <View style={[styles.firstside, {width: width, height: height}]}>
         <View>
           <FlatList
             horizontal
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEBE10',
      alignItems: 'center'
     },
-  ersteSeite: {
+  firstside: {
     backgroundColor: '#FEBE10',
   },
   

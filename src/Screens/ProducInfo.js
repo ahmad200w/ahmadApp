@@ -33,7 +33,7 @@ const ProducInfo = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={{flexDirection:'column',alignItems:'center'}}>
+        <View style={styles.conatiner}>
         <FlatList
           keyExtractor={item => item.id}
           data={data[id].images}
@@ -83,6 +83,7 @@ const ProducInfo = () => {
 export default ProducInfo;
 
 const styles = StyleSheet.create({
+  conatiner:{flexDirection:'column',alignItems:'center'},
   imag: {
     aspectRatio: 1,
   },
