@@ -1,7 +1,7 @@
 import {
   Alert,
-    Animated,
-    Image,
+  Animated,
+  Image,
   Pressable,
   SafeAreaView,
   StyleSheet,
@@ -12,116 +12,51 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { apiOrder, orderData } from '../../api';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {apiOrder, orderData} from '../../api';
 import VisaCard from '../Components/VisaCard';
 import Total from '../Components/Total';
-import { handleCcvChange, handleTextChange } from '../helpers';
+import {handleCcvChange, handleTextChange} from '../helpers';
 import VisaCardInput from '../Components/VisaCardInput';
-import { sendOrdertoDatabase } from '../useOrder';
+import {sendOrdertoDatabase} from '../useOrder';
 
 const Payments = () => {
-    const tab = createMaterialTopTabNavigator()
+  const tab = createMaterialTopTabNavigator();
   const {width, height} = useWindowDimensions();
   const [cardInput, setCardInput] = useState();
   const [expiryDate, setExpiryDate] = useState(0);
   const [ccv, setCcv] = useState(0);
-  const [open,setOpen]= useState(false)
-  const router = useRoute()
+  const [open, setOpen] = useState(false);
+  const router = useRoute();
   const navigation = useNavigation();
-  const data = router.params.sendOrdersDatails
- 
-  const total = router.params.total
-/*
-  const printTheUser = async () => {
-    try {
-      const data = await AsyncStorage.getItem("emailLogin");
-      if (data) {
-        const userAndEmail = JSON.parse(data);
-        const { userName, email } = userAndEmail;
-    
-        // إرجاع القيم
-        return { userName, email };
-      } else {
-        console.log("data no exist ...");
-        return { userName: null, email: null };
-      }
-    } catch (error) {
-      console.log("Error:", error);
-      return { userName: null, email: null };
+  const data = router.params.sendOrdersDatails;
+
+  const total = router.params.total;
+
+  const handleSendOrder = async () => {
+    const result = await sendOrdertoDatabase(data, total);
+    console.log(result, ' result issdsd');
+    if (result.message === 'Order sent successfully') {
+      Alert.alert('Order sent successfully:', result);
+
+      setTimeout(() => {
+        navigation.navigate('Home');
+      }, 5000);
+    } else {
+      Alert.alert('Failed to send order:', result.error);
     }
   };
-  
 
- 
-const sendOrdertoDatabase = async () => {
-  try {
-    // استرجاع بيانات المستخدم من AsyncStorage
-    const userData = await printTheUser();
-    
-   
-    const orders = router.params.sendOrdersDatails;
-    const total = router.params.total;
-
-    // التحقق من أن userData يحتوي على البيانات الضرورية
-    if (!userData.userName || !userData.email) {
-      throw new Error('User data is incomplete');
-    }
-
-    // إرسال الطلب إلى قاعدة البيانات
-    const { data, status } = await apiOrder(userData.userName, userData.email, orders, total);
-
-    // التحقق من نجاح الطلب
-    if (status === 200) {
-      console.log("Order sent successfully:", data);
-    } else {
-      console.log("Failed to send order. Status code:", status);
-      console.log("Error details:", data);
-    }
-
-  } catch (error) {
-    console.log("Error 500 ...", error);
-  }
-};
-
-
-
-
- 
-*/
-
-const handleSendOrder = async () => {
-  const result = await sendOrdertoDatabase(data, total);
-  console.log(result," result issdsd")
-  if (result.message ==="Order sent successfully") {
-    Alert.alert("Order sent successfully:", result);
-    /*
-    setTimeout(() => {
-      navigation.navigate("Home")
-    }, 5000);
-    */
-    
-  } else {
-    Alert.alert("Failed to send order:", result.error);
-  }
-};
-
- 
-  
-
-
-
-  const handelCardInput = inputNumber =>{
-    const inputCardNumber =handleTextChange(inputNumber)
-    setCardInput(inputCardNumber)
-  }
-
+  const handelCardInput = inputNumber => {
+    const inputCardNumber = handleTextChange(inputNumber);
+    setCardInput(inputCardNumber);
+  };
 
   const handelCcv = inputCcv => {
-    const ccvCheckLimit =handleCcvChange(inputCcv)
-    setCcv(ccvCheckLimit)
+    const ccvCheckLimit = handleCcvChange(inputCcv);
+    setCcv(ccvCheckLimit);
   };
 
   const handleDateChange = text => {
@@ -135,30 +70,26 @@ const handleSendOrder = async () => {
     }
   };
 
-
- 
   return (
     <SafeAreaView style={styles.body}>
-    <VisaCard 
-    cardInput={cardInput}
-     expiryDate={expiryDate} 
-      />
+      <VisaCard cardInput={cardInput} expiryDate={expiryDate} />
       <VisaCardInput
-      handelCardInput={handelCardInput}
-       handleDateChange={handleDateChange} 
-       handleCcvChange={handleCcvChange}
-       cardInput={cardInput}
-       expiryDate={expiryDate}
-       ccv={ccv}
-
-       />
-      <Total open={open} total={total} handleSendOrder={handleSendOrder} setOpen={setOpen} />
-      
-     
+        handelCardInput={handelCardInput}
+        handleDateChange={handleDateChange}
+        handleCcvChange={handleCcvChange}
+        cardInput={cardInput}
+        expiryDate={expiryDate}
+        ccv={ccv}
+      />
+      <Total
+        open={open}
+        total={total}
+        handleSendOrder={handleSendOrder}
+        setOpen={setOpen}
+      />
     </SafeAreaView>
   );
-
-}
+};
 export default Payments;
 
 const styles = StyleSheet.create({
@@ -198,7 +129,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30,
     left: 22,
-  },sendButton: {
+  },
+  sendButton: {
     backgroundColor: '#007BFF',
     padding: 10,
     borderRadius: 5,

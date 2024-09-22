@@ -30,7 +30,7 @@ const Anzeige = ({data, start}) => {
           }}>
           <Image
             source={data.backgroundImage}
-            style={{width: 150, height: 150, right: 18}}
+            style={styles.imageStyle}
           />
           <TouchableOpacity
             style={styles.jetztKaufen}
@@ -93,6 +93,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '800',
   },
+  imageStyle:{
+    width: 150, height: 150, right: 18
+  }
 });
 
 export default Anzeige;
