@@ -17,6 +17,8 @@ import useLogin from './hooks/useLogin';
 
 const Login = () => {
   const navigation = useNavigation();
+  
+  // تذيكر لبناء object بدل وضع كل وحد لوحده {user,email,password }
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
